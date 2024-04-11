@@ -1,6 +1,9 @@
 import { NextRequest,NextResponse } from 'next/server';
-import { NextApiRequest, NextApiResponse } from 'next';
-import { getFirestore, collection, getDocs } from "firebase/firestore";
+//import { NextApiRequest, NextApiResponse } from 'next';
+//import { getFirestore, collection, getDocs } from "firebase/firestore";
+//import firebase from 'firebase/compat/app';
+//import 'firebase/compat/firestore';
+
 //firebase import
 import { initializeApp } from "firebase/app";
 const firebaseConfig = {
@@ -16,13 +19,12 @@ const firebaseConfig = {
 //firebase init
 const app = initializeApp(firebaseConfig);
 //get db instance
-const db = getFirestore(app);
+//const firestore = getFirestore(app);
+//const db = firebase.firestore();
 
 //httpmethod test success
 export async function GET(req:NextRequest)
 {
-    //const data = await req;
-    //var data = NextRequest.arguments('id');
     const data = req.nextUrl.searchParams.get("id")
     return NextResponse.json({data});
 }
@@ -35,9 +37,8 @@ export async function POST(req:Request)
     //    projectId: 'nextjsdata-a0e12',
     //    keyFilename: firebaseConfig,
     //  });
-    //  const db2test = db2.collection('member').doc('user');
-    var hhh = db.toJSON();
+    //const dbtest = db.collection('member').doc('user').get();
     return NextResponse.json({
-        hhh
+        data
     });
 }
