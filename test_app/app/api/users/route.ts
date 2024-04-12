@@ -1,10 +1,10 @@
 import { NextRequest,NextResponse } from 'next/server';
 //import { NextApiRequest, NextApiResponse } from 'next';
 //import { getFirestore, collection, getDocs } from "firebase/firestore";
-//import firebase from 'firebase/compat/app';
-//import 'firebase/compat/firestore';
+import firebase from 'firebase/compat/app';
+import 'firebase/compat/firestore';
 
-//firebase import
+//firebase import   
 import { initializeApp } from "firebase/app";
 const firebaseConfig = {
     apiKey: "AIzaSyC1oPm-llME7_pjf78SVohp1iFbpFceuDA",
@@ -17,10 +17,11 @@ const firebaseConfig = {
     measurementId: "G-RTJEBRPSR4"
   };
 //firebase init
-const app = initializeApp(firebaseConfig);
+//const app = initializeApp(firebaseConfig);
 //get db instance
 //const firestore = getFirestore(app);
-//const db = firebase.firestore();
+firebase.initializeApp(firebaseConfig);
+const db = firebase.firestore();
 
 //httpmethod test success
 export async function GET(req:NextRequest)
@@ -32,13 +33,13 @@ export async function GET(req:NextRequest)
 export async function POST(req:Request)
 {
     const data = await req.json();
-    //const Firestore = require('@google-cloud/firestore');
-    //const db2 = new Firestore({
-    //    projectId: 'nextjsdata-a0e12',
-    //    keyFilename: firebaseConfig,
-    //  });
-    //const dbtest = db.collection('member').doc('user').get();
+    const dbtest = db.collection("member").doc(data.name).set(
+        {
+            name : data.name,
+            birth:data.birth,
+            phone:data.phone
+    });
     return NextResponse.json({
-        data
+        dbtest
     });
 }
