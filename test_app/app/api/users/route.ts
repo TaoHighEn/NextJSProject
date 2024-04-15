@@ -26,8 +26,16 @@ const db = firebase.firestore();
 //httpmethod test success
 export async function GET(req:NextRequest)
 {
-    const data = req.nextUrl.searchParams.get("id")
-    return NextResponse.json({data});
+    var data= req.nextUrl.searchParams.get("id")?.toString()
+    const result = ((await db.collection("member").doc(data).get()));
+    //log query here
+    //return NextResponse.json({data});
+    if(!result.exists){
+        return NextResponse.json("000 - not existed in list");
+    }
+    else{
+        return NextResponse.json(result.data());
+    }
 }
 
 export async function POST(req:Request)
@@ -39,6 +47,7 @@ export async function POST(req:Request)
             birth:data.birth,
             phone:data.phone
     });
+    //log query here
     return NextResponse.json({
         dbtest
     });
